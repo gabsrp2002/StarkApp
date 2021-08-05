@@ -578,7 +578,7 @@ class App:
                 new_quantity = product['in_stock'] - quantity
 
                 new_history_window = tk.Toplevel(self.root)
-                new_history_window.geometry("500x150")
+                new_history_window.geometry("700x150")
                 new_history_window.resizable(False, False)
 
                 tk.Label(new_history_window,
