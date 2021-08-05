@@ -3,3 +3,6 @@
 
 # Ignores .DS_Store
 .DS_Store
+
+# Ignore databases
+*.db
