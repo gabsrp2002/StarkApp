@@ -262,6 +262,20 @@ class App:
                     sheet.cell(row=row + 2, column=1).fill = blueFill
                     sheet.cell(row=row + 2, column=2).fill = blueFill
                     sheet.cell(row=row + 2, column=3).fill = blueFill
+                elif "adicionadas" in action['description']:
+                    orangeFill = PatternFill(start_color='E67300',
+                                           end_color='E67300',
+                                           fill_type='solid')
+                    sheet.cell(row=row + 2, column=1).fill = orangeFill
+                    sheet.cell(row=row + 2, column=2).fill = orangeFill
+                    sheet.cell(row=row + 2, column=3).fill = orangeFill
+                elif "alterado" in action['description']:
+                    yellowFill = PatternFill(start_color='F2EA00',
+                                           end_color='F2EA00',
+                                           fill_type='solid')
+                    sheet.cell(row=row + 2, column=1).fill = yellowFill
+                    sheet.cell(row=row + 2, column=2).fill = yellowFill
+                    sheet.cell(row=row + 2, column=3).fill = yellowFill
 
             sheet.column_dimensions[get_column_letter(1)].width = 100
             sheet.column_dimensions[get_column_letter(2)].width = 15
@@ -606,7 +620,7 @@ class App:
 
                 def add_history(action):
                     """
-
+                    Adds the action to the history.
                     """
                     message_string = f"{quantity} unidades do produto {product['name']} {product['color']} {product['size']} foram {action} para {name_entry.get()}"
 
