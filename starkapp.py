@@ -756,7 +756,6 @@ class App:
             self.table.delete(item)
 
         # Adds the products
-        counter = 1
         for product in produtcs:
             if product['in_stock']:
                 self.table.insert(
@@ -778,7 +777,6 @@ class App:
                      product['in_stock'],
                      "R$" + f"{product['price']:.2f}".replace(".", ",")),
                     tags=('redrow', ))
-            counter += 1
 
     def close(self):
         self.data.close()
