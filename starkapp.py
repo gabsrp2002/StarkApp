@@ -59,15 +59,14 @@ class App:
 
         self.table = ttk.Treeview(self.table_frame,
                                   columns=(1, 2, 3, 0),
-                                  show="headings",
-                                  selectmode="browse")
+                                  show="headings")
         self.table.place(relwidth=0.98, relheight=0.95)
 
         self.table.heading(1, text="Nome", anchor="w")
         self.table.heading(2, text="Estoque", anchor="w")
         self.table.heading(3, text="Preço", anchor="w")
 
-        self.table.column(0, width=0, stretch="no")
+        self.table.column(0, width=0, stretch=False)
         self.table.column(1, anchor="w", width=200, minwidth=200)
         self.table.column(2, anchor="w", width=40)
         self.table.column(3, anchor="w", width=40)
@@ -126,7 +125,7 @@ class App:
                                                              relx=0.35)
 
         tk.Button(self.buttons_frame,
-                  text="Deletar produto",
+                  text="Deletar produtos",
                   font="None 12",
                   command=lambda: self.delete_product()).place(relheight=0.45,
                                                                relwidth=0.3,
@@ -264,15 +263,15 @@ class App:
                     sheet.cell(row=row + 2, column=3).fill = blueFill
                 elif "adicionadas" in action['description']:
                     orangeFill = PatternFill(start_color='E67300',
-                                           end_color='E67300',
-                                           fill_type='solid')
+                                             end_color='E67300',
+                                             fill_type='solid')
                     sheet.cell(row=row + 2, column=1).fill = orangeFill
                     sheet.cell(row=row + 2, column=2).fill = orangeFill
                     sheet.cell(row=row + 2, column=3).fill = orangeFill
                 elif "alterado" in action['description']:
                     yellowFill = PatternFill(start_color='F2EA00',
-                                           end_color='F2EA00',
-                                           fill_type='solid')
+                                             end_color='F2EA00',
+                                             fill_type='solid')
                     sheet.cell(row=row + 2, column=1).fill = yellowFill
                     sheet.cell(row=row + 2, column=2).fill = yellowFill
                     sheet.cell(row=row + 2, column=3).fill = yellowFill
@@ -333,21 +332,23 @@ class App:
         """
         # Checks if there is a product selected.
         # If there isn't, then the button should do nothing
-        try:
-            product_id = int(self.table.focus())
-        except ValueError:
-            self.raise_message("Selecione um produto para deletar!")
+        selected_products = list(map(int, self.table.selection()))
+        amount_items = len(selected_products)
+        if amount_items == 0:
+            self.raise_message("Selecione pelo menos um produto para deletar!")
             return
 
         # Creates a confirm window
         confirm_window = tk.Toplevel(self.root)
-        confirm_window.geometry("500x50")
+        confirm_window.geometry("500x100")
         confirm_window.resizable(False, False)
         confirm_window.title("Confirmação")
 
-        tk.Label(confirm_window,
-                 text="Tem certeza de que deseja apagar esse produto?",
-                 font="None 15 bold").place(relheight=0.5, relwidth=1)
+        tk.Label(
+            confirm_window,
+            text=
+            f"Tem certeza de que deseja apagar {amount_items} produtos?\nEssa ação não pode ser desfeita.",
+            font="None 15 bold").place(relheight=0.5, relwidth=1)
         tk.Button(confirm_window,
                   text="Sim",
                   command=lambda: confirm(),
@@ -361,7 +362,8 @@ class App:
                       relheight=0.45, relwidth=0.2, relx=0.2, rely=0.5)
 
         def confirm():
-            self.data.delete_product(product_id)
+            for product_id in selected_products:
+                self.data.delete_product(product_id)
             self.fill_table()
             confirm_window.destroy()
 
