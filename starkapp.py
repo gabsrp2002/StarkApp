@@ -496,9 +496,9 @@ class App:
         """
         Gives the option to the user to change the stocks of a product
         """
-        try:
-            product_id = int(self.table.focus())
-        except ValueError:
+        selected_products = list(map(int, self.table.selection()))
+        amount_items = len(selected_products)
+        if (amount_items == 0):
             self.raise_message("Selecione um produto para alterar o estoque!")
             return
 
@@ -568,9 +568,14 @@ class App:
                 self.raise_message("A quantidade tem que ser não negativa!")
                 return
 
-            product = self.data.get_product(product_id)
-
             if action == "remove":
+                if (amount_items > 1):
+                    self.raise_message(
+                        "Selecione apenas um produto para essa operação.")
+                    return
+
+                product = self.data.get_product(selected_products[0])
+
                 if quantity > product['in_stock']:
                     self.raise_message(
                         "Tá querendo tirar mais do que tem?\nQuer moleza? Senta num pudim!"
@@ -631,6 +636,12 @@ class App:
                     new_history_window.destroy()
 
             elif action == "add":
+                if (amount_items > 1):
+                    self.raise_message(
+                        "Selecione apenas um produto para essa operação.")
+                    return
+
+                product = self.data.get_product(selected_products[0])
                 new_quantity = product['in_stock'] + quantity
 
                 self.data.add_history(
@@ -639,17 +650,25 @@ class App:
             elif action == "change":
                 new_quantity = quantity
 
-                self.data.add_history(
-                    f"Estoque do produto {product['name']} {product['color']} {product['size']} foi alterado para {quantity}"
-                )
+                for product_id in selected_products:
+                    product = self.data.get_product(product_id)
+                    self.data.add_history(
+                        f"Estoque do produto {product['name']} {product['color']} {product['size']} foi alterado para {quantity}"
+                    )
 
-            self.data.update_stock(product_id, new_quantity)
+            for product_id in selected_products:
+                self.data.update_stock(product_id, new_quantity)
 
             stock_window.destroy()
 
-            self.raise_message(
-                f"O estoque de {product['name']} {product['color']} {product['size']} foi atualizado para {new_quantity}",
-                "Mensagem")
+            if (amount_items == 1):
+                self.raise_message(
+                    f"O estoque de {product['name']} {product['color']} {product['size']} foi atualizado para {new_quantity}",
+                    "Mensagem")
+            else:
+                self.raise_message(
+                    f"O estoque dos produtos selecionados foi atualizado para {new_quantity}",
+                    "Mensagem")
 
             self.fill_table()
 
@@ -657,9 +676,9 @@ class App:
         """
         Gives the option to the user to change the price of a product
         """
-        try:
-            product_id = int(self.table.focus())
-        except ValueError:
+        selected_products = list(map(int, self.table.selection()))
+        amount_items = len(selected_products)
+        if (amount_items == 0):
             self.raise_message("Selecione um produto para alterar o preço!")
             return
 
@@ -712,18 +731,24 @@ class App:
                 self.raise_message("O preço tem que ser não negativo!")
                 return
 
-            product = self.data.get_product(product_id)
+            for product_id in selected_products:
+                product = self.data.get_product(product_id)
 
-            self.data.update_price(product_id, new_price)
-            self.data.add_history(
-                f"Preço do produto {product['name']} {product['color']} {product['size']} foi alterado de R${product['price']:.2f} para R${new_price:.2f}"
-                .replace(".", ","))
+                self.data.update_price(product_id, new_price)
+                self.data.add_history(
+                    f"Preço do produto {product['name']} {product['color']} {product['size']} foi alterado de R${product['price']:.2f} para R${new_price:.2f}"
+                    .replace(".", ","))
 
             price_window.destroy()
 
-            self.raise_message(
-                f"O preço de {product['name']} {product['color']} {product['size']} foi atualizado para R$"
-                + f"{new_price:.2f}".replace(".", ","), "Mensagem")
+            if (amount_items == 1):
+                self.raise_message(
+                    f"O preço de {product['name']} {product['color']} {product['size']} foi atualizado para R$"
+                    + f"{new_price:.2f}".replace(".", ","), "Mensagem")
+            else:
+                self.raise_message(
+                    "O preço dos produtos selecionados foi atualizado para R$"
+                    + f"{new_price:.2f}".replace(".", ","), "Mensagem")
 
             self.fill_table()
 
