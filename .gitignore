@@ -9,3 +9,6 @@
 
 # Ignores environments
 .venv/
+
+# Ignores Lsp config
+pyrightconfig.json
