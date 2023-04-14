@@ -17,9 +17,9 @@ class App:
         self.root.protocol("WM_DELETE_WINDOW", lambda: self.close())
         self.root.geometry("600x700")
         self.root.title("Stark App")
-        self.root.iconbitmap("logo.ico")
+        self.root.iconbitmap("images/logo.ico")
 
-        self.image = ImageTk.PhotoImage(file="iu.jpeg")
+        self.image = ImageTk.PhotoImage(file="images/background_image.jpeg")
         tk.Label(self.root, image=self.image).place(relwidth=1, relheight=1)
 
         # Configures the search frame
