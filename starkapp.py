@@ -2,7 +2,7 @@ from starkdata import StarkData
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from PIL import ImageTk
+from PIL import ImageTk, Image
 from time import strftime, localtime
 import openpyxl
 from openpyxl.utils import get_column_letter
@@ -19,8 +19,27 @@ class App:
         self.root.title("Stark App")
         self.root.iconbitmap("images/logo.ico")
 
-        self.image = ImageTk.PhotoImage(file="images/background_image.jpeg")
-        tk.Label(self.root, image=self.image).place(relwidth=1, relheight=1)
+        # Adds responsive background image
+        image_file_path = os.path.join("images", "background_image.jpeg")
+        image_canvas = tk.Canvas(self.root, width="600", height="700")
+        image_canvas.pack(fill="both", expand=True)
+        self.image : ImageTk.PhotoImage # Image needs to be an attribute to not be deleted by garbage colector
+
+        def resize_image(event : tk.Event) -> None:
+            """
+            Resizes image with width and height of the 'event'.
+            Adds image to image_canvas.
+            """
+            self.image = ImageTk.PhotoImage(
+                Image.open(image_file_path).resize(
+                    (event.width, event.height), Image.LANCZOS
+                )
+            )
+
+            image_canvas.create_image(0, 0, image=self.image, anchor="nw")
+
+        # Resizes image everytime the window is updated
+        image_canvas.bind("<Configure>", resize_image)
 
         # Configures the search frame
         self.search_frame = tk.Frame(self.root, bg="red", bd=5)
