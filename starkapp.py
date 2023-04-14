@@ -437,7 +437,7 @@ class App:
                 price = 0
             else:
                 try:
-                    price = float(price)
+                    price = float(price.replace(",", "."))
                 except ValueError:
                     self.raise_message("O preço tem que ser um número real!")
                     return
