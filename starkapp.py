@@ -24,42 +24,37 @@ class App:
 
         # Configures the search frame
         self.search_frame = tk.Frame(self.root, bg="red", bd=5)
-        self.search_frame.place(relx=0.5,
-                                rely=0.075,
-                                relwidth=0.75,
-                                relheight=0.15,
-                                anchor="n")
+        self.search_frame.place(
+            relx=0.5, rely=0.075, relwidth=0.75, relheight=0.15, anchor="n"
+        )
 
         self.search_label = tk.Label(
             self.search_frame,
-            text=
-            "Digite o produto buscado e clique em 'Buscar'\n ou deixe em branco para obter todos os produtos",
-            font="None 15")
+            text="Digite o produto buscado e clique em 'Buscar'\n ou deixe em branco para obter todos os produtos",
+            font="None 15",
+        )
         self.search_label.place(relheight=0.45, relwidth=1)
 
         self.search_bar = tk.Entry(self.search_frame, font="None 15")
         self.search_bar.place(rely=0.5, relwidth=0.69, relheight=0.5)
 
-        self.search_button = tk.Button(self.search_frame,
-                                       text="Buscar",
-                                       font="None 15",
-                                       command=lambda: self.fill_table())
-        self.search_button.place(relx=0.7,
-                                 rely=0.5,
-                                 relwidth=0.30,
-                                 relheight=0.5)
+        self.search_button = tk.Button(
+            self.search_frame,
+            text="Buscar",
+            font="None 15",
+            command=lambda: self.fill_table(),
+        )
+        self.search_button.place(relx=0.7, rely=0.5, relwidth=0.30, relheight=0.5)
 
         # Configures the table of products
         self.table_frame = tk.Frame(self.root, bg="black", bd=5)
-        self.table_frame.place(relx=0.5,
-                               rely=0.25,
-                               relwidth=0.75,
-                               relheight=0.5,
-                               anchor="n")
+        self.table_frame.place(
+            relx=0.5, rely=0.25, relwidth=0.75, relheight=0.5, anchor="n"
+        )
 
-        self.table = ttk.Treeview(self.table_frame,
-                                  columns=(1, 2, 3, 0),
-                                  show="headings")
+        self.table = ttk.Treeview(
+            self.table_frame, columns=("1", "2", "3", "0"), show="headings"
+        )
         self.table.place(relwidth=0.98, relheight=0.95)
 
         self.table.heading(1, text="Nome", anchor="w")
@@ -71,81 +66,75 @@ class App:
         self.table.column(2, anchor="w", width=40)
         self.table.column(3, anchor="w", width=40)
 
-        self.table.tag_configure('greenrow',
-                                 background="#02fb5e",
-                                 font="None 12")
-        self.table.tag_configure('redrow',
-                                 background="#df1019",
-                                 font="None 12")
+        self.table.tag_configure("greenrow", background="#02fb5e", font="None 12")
+        self.table.tag_configure("redrow", background="#df1019", font="None 12")
 
-        self.scroll_bar = ttk.Scrollbar(self.table_frame,
-                                        orient="vertical",
-                                        command=self.table.yview)
+        self.scroll_bar = ttk.Scrollbar(
+            self.table_frame, orient="vertical", command=self.table.yview
+        )
         self.scroll_bar.place(relx=0.98, relheight=0.95, relwidth=0.02)
 
         self.table.configure(yscrollcommand=self.scroll_bar.set)
 
         self.style = ttk.Style()
         self.style.theme_use("default")
-        self.style.configure("Treeview",
-                             background="#D3D3D3",
-                             foreground="black",
-                             rowheight=25,
-                             fieldbackground="#D3D3D3")
+        self.style.configure(
+            "Treeview",
+            background="#D3D3D3",
+            foreground="black",
+            rowheight=25,
+            fieldbackground="#D3D3D3",
+        )
         self.style.configure("Treeview.Heading", font=(None, 15))
-        self.style.map("Treeview", background=[('selected', 'blue')])
+        self.style.map("Treeview", background=[("selected", "blue")])
 
-        tk.Button(self.table_frame,
-                  text="+",
-                  font="None 12",
-                  command=lambda: self.add_product()).place(relheight=0.05,
-                                                            relwidth=1,
-                                                            rely=0.95)
+        tk.Button(
+            self.table_frame,
+            text="+",
+            font="None 12",
+            command=lambda: self.add_product(),
+        ).place(relheight=0.05, relwidth=1, rely=0.95)
 
         # Configures the action buttons
         self.buttons_frame = tk.Frame(self.root, bg="red", bd=5)
-        self.buttons_frame.place(relx=0.5,
-                                 rely=0.8,
-                                 relheight=0.15,
-                                 relwidth=0.75,
-                                 anchor="n")
+        self.buttons_frame.place(
+            relx=0.5, rely=0.8, relheight=0.15, relwidth=0.75, anchor="n"
+        )
 
-        tk.Button(self.buttons_frame,
-                  text="Alterar preço",
-                  font="None 12",
-                  command=lambda: self.change_price()).place(relheight=0.45,
-                                                             relwidth=0.3,
-                                                             relx=0.015)
+        tk.Button(
+            self.buttons_frame,
+            text="Alterar preço",
+            font="None 12",
+            command=lambda: self.change_price(),
+        ).place(relheight=0.45, relwidth=0.3, relx=0.015)
 
-        tk.Button(self.buttons_frame,
-                  text="Alterar estoque",
-                  font="None 12",
-                  command=lambda: self.change_stock()).place(relheight=0.45,
-                                                             relwidth=0.3,
-                                                             relx=0.35)
+        tk.Button(
+            self.buttons_frame,
+            text="Alterar estoque",
+            font="None 12",
+            command=lambda: self.change_stock(),
+        ).place(relheight=0.45, relwidth=0.3, relx=0.35)
 
-        tk.Button(self.buttons_frame,
-                  text="Deletar produtos",
-                  font="None 12",
-                  command=lambda: self.delete_product()).place(relheight=0.45,
-                                                               relwidth=0.3,
-                                                               relx=0.685)
+        tk.Button(
+            self.buttons_frame,
+            text="Deletar produtos",
+            font="None 12",
+            command=lambda: self.delete_product(),
+        ).place(relheight=0.45, relwidth=0.3, relx=0.685)
 
-        tk.Button(self.buttons_frame,
-                  text="Gerar Relatório",
-                  font="None 12",
-                  command=lambda: self.create_report()).place(relheight=0.45,
-                                                              relwidth=0.4775,
-                                                              rely=0.55,
-                                                              relx=0.015)
+        tk.Button(
+            self.buttons_frame,
+            text="Gerar Relatório",
+            font="None 12",
+            command=lambda: self.create_report(),
+        ).place(relheight=0.45, relwidth=0.4775, rely=0.55, relx=0.015)
 
-        tk.Button(self.buttons_frame,
-                  text="Gerar histórico",
-                  font="None 12",
-                  command=lambda: self.show_history()).place(relheight=0.45,
-                                                             relwidth=0.4775,
-                                                             rely=0.55,
-                                                             relx=0.5075)
+        tk.Button(
+            self.buttons_frame,
+            text="Gerar histórico",
+            font="None 12",
+            command=lambda: self.show_history(),
+        ).place(relheight=0.45, relwidth=0.4775, rely=0.55, relx=0.5075)
 
     def show_history(self):
         """
@@ -158,47 +147,33 @@ class App:
 
         tk.Label(
             history_window,
-            text=
-            "Insira a data para produzir o histórico:\nformato: 'dia-mês-ano'",
-            font="None 20 bold").place(relheight=0.3, relwidth=1, rely=0.05)
-        tk.Label(history_window,
-                 text="Data inicial:",
-                 font="None 15 bold",
-                 anchor="w").place(relheight=0.15,
-                                   relwidth=0.27,
-                                   rely=0.4,
-                                   relx=0.05)
+            text="Insira a data para produzir o histórico:\nformato: 'dia-mês-ano'",
+            font="None 20 bold",
+        ).place(relheight=0.3, relwidth=1, rely=0.05)
+        tk.Label(
+            history_window, text="Data inicial:", font="None 15 bold", anchor="w"
+        ).place(relheight=0.15, relwidth=0.27, rely=0.4, relx=0.05)
         start_date_entry = tk.Entry(history_window, font="None 12")
-        start_date_entry.place(relheight=0.15,
-                               relwidth=0.63,
-                               rely=0.4,
-                               relx=0.32)
-        tk.Label(history_window,
-                 text="Data final:",
-                 font="None 15 bold",
-                 anchor="w").place(relheight=0.15,
-                                   relwidth=0.27,
-                                   rely=0.55,
-                                   relx=0.05)
+        start_date_entry.place(relheight=0.15, relwidth=0.63, rely=0.4, relx=0.32)
+        tk.Label(
+            history_window, text="Data final:", font="None 15 bold", anchor="w"
+        ).place(relheight=0.15, relwidth=0.27, rely=0.55, relx=0.05)
         end_date_entry = tk.Entry(history_window, font="None 12")
-        end_date_entry.place(relheight=0.15,
-                             relwidth=0.63,
-                             rely=0.55,
-                             relx=0.32)
+        end_date_entry.place(relheight=0.15, relwidth=0.63, rely=0.55, relx=0.32)
 
-        tk.Button(history_window,
-                  text="Cancelar",
-                  fg="#df1019",
-                  font="None 12",
-                  command=lambda: history_window.destroy()).place(
-                      rely=0.825, relx=0.06, relheight=0.1, relwidth=0.4)
-        tk.Button(history_window,
-                  text="Gerar",
-                  font="None 12",
-                  command=lambda: create_history()).place(rely=0.825,
-                                                          relx=0.54,
-                                                          relheight=0.1,
-                                                          relwidth=0.4)
+        tk.Button(
+            history_window,
+            text="Cancelar",
+            fg="#df1019",
+            font="None 12",
+            command=lambda: history_window.destroy(),
+        ).place(rely=0.825, relx=0.06, relheight=0.1, relwidth=0.4)
+        tk.Button(
+            history_window,
+            text="Gerar",
+            font="None 12",
+            command=lambda: create_history(),
+        ).place(rely=0.825, relx=0.54, relheight=0.1, relwidth=0.4)
 
         def create_history():
             """
@@ -227,12 +202,14 @@ class App:
 
             # Creates dates with desired format
             formatted_start_date = "-".join(
-                reversed([item.zfill(2) for item in start_date.split("-")]))
+                reversed([item.zfill(2) for item in start_date.split("-")])
+            )
             formatted_end_date = "-".join(
-                reversed([item.zfill(2) for item in end_date.split("-")]))
+                reversed([item.zfill(2) for item in end_date.split("-")])
+            )
 
             work_book = openpyxl.Workbook()
-            sheet = work_book.active
+            sheet = work_book["Sheet"]
 
             sheet.cell(row=1, column=1).value = "Descrição"
             sheet.cell(row=1, column=2).value = "Data"
@@ -240,38 +217,39 @@ class App:
 
             # Fills the rows with the actions in history
             for row, action in enumerate(
-                    self.data.read_history(formatted_start_date,
-                                           formatted_end_date)):
-                sheet.cell(row=row + 2, column=1).value = action['description']
+                self.data.read_history(formatted_start_date, formatted_end_date)
+            ):
+                sheet.cell(row=row + 2, column=1).value = action["description"]
                 sheet.cell(row=row + 2, column=2).value = "-".join(
-                    reversed(action['date'].split("-")))
-                sheet.cell(row=row + 2, column=3).value = action['time']
+                    reversed(action["date"].split("-"))
+                )
+                sheet.cell(row=row + 2, column=3).value = action["time"]
 
-                if "vendidas" in action['description']:
-                    greenFill = PatternFill(start_color='90EE90',
-                                            end_color='90EE90',
-                                            fill_type='solid')
+                if "vendidas" in action["description"]:
+                    greenFill = PatternFill(
+                        start_color="90EE90", end_color="90EE90", fill_type="solid"
+                    )
                     sheet.cell(row=row + 2, column=1).fill = greenFill
                     sheet.cell(row=row + 2, column=2).fill = greenFill
                     sheet.cell(row=row + 2, column=3).fill = greenFill
-                elif "dadas" in action['description']:
-                    blueFill = PatternFill(start_color='19B2FF',
-                                           end_color='19B2FF',
-                                           fill_type='solid')
+                elif "dadas" in action["description"]:
+                    blueFill = PatternFill(
+                        start_color="19B2FF", end_color="19B2FF", fill_type="solid"
+                    )
                     sheet.cell(row=row + 2, column=1).fill = blueFill
                     sheet.cell(row=row + 2, column=2).fill = blueFill
                     sheet.cell(row=row + 2, column=3).fill = blueFill
-                elif "adicionadas" in action['description']:
-                    orangeFill = PatternFill(start_color='E67300',
-                                             end_color='E67300',
-                                             fill_type='solid')
+                elif "adicionadas" in action["description"]:
+                    orangeFill = PatternFill(
+                        start_color="E67300", end_color="E67300", fill_type="solid"
+                    )
                     sheet.cell(row=row + 2, column=1).fill = orangeFill
                     sheet.cell(row=row + 2, column=2).fill = orangeFill
                     sheet.cell(row=row + 2, column=3).fill = orangeFill
-                elif "alterado" in action['description']:
-                    yellowFill = PatternFill(start_color='F2EA00',
-                                             end_color='F2EA00',
-                                             fill_type='solid')
+                elif "alterado" in action["description"]:
+                    yellowFill = PatternFill(
+                        start_color="F2EA00", end_color="F2EA00", fill_type="solid"
+                    )
                     sheet.cell(row=row + 2, column=1).fill = yellowFill
                     sheet.cell(row=row + 2, column=2).fill = yellowFill
                     sheet.cell(row=row + 2, column=3).fill = yellowFill
@@ -294,7 +272,7 @@ class App:
         """
 
         work_book = openpyxl.Workbook()
-        sheet = work_book.active
+        sheet = work_book["Sheet"]
 
         sheet.cell(row=1, column=1).value = "Produto"
         sheet.cell(row=1, column=2).value = "Estoque"
@@ -303,16 +281,17 @@ class App:
         # Fills the rows with the products
         # Colors the row red if the product is not in stock
         for row, product in enumerate(self.data.search_product("")):
-            sheet.cell(row=row + 2, column=1).value = product[
-                'name'] + " " + product['color'] + " " + product['size']
-            sheet.cell(row=row + 2, column=2).value = product['in_stock']
-            sheet.cell(row=row + 2, column=3).value = product['price']
-            sheet.cell(row=row + 2, column=3).number_format = 'R$0.00'
+            sheet.cell(row=row + 2, column=1).value = (
+                product["name"] + " " + product["color"] + " " + product["size"]
+            )
+            sheet.cell(row=row + 2, column=2).value = product["in_stock"]
+            sheet.cell(row=row + 2, column=3).value = product["price"]
+            sheet.cell(row=row + 2, column=3).number_format = "R$0.00"
 
-            if product['in_stock'] == 0:
-                redFill = PatternFill(start_color='FFCCCB',
-                                      end_color='FFCCCB',
-                                      fill_type='solid')
+            if product["in_stock"] == 0:
+                redFill = PatternFill(
+                    start_color="FFCCCB", end_color="FFCCCB", fill_type="solid"
+                )
                 sheet.cell(row=row + 2, column=1).fill = redFill
                 sheet.cell(row=row + 2, column=2).fill = redFill
                 sheet.cell(row=row + 2, column=3).fill = redFill
@@ -346,20 +325,15 @@ class App:
 
         tk.Label(
             confirm_window,
-            text=
-            f"Tem certeza de que deseja apagar {amount_items} produtos?\nEssa ação não pode ser desfeita.",
-            font="None 15 bold").place(relheight=0.5, relwidth=1)
-        tk.Button(confirm_window,
-                  text="Sim",
-                  command=lambda: confirm(),
-                  fg="red").place(relheight=0.45,
-                                  relwidth=0.2,
-                                  relx=0.6,
-                                  rely=0.5)
-        tk.Button(confirm_window,
-                  text="Cancelar",
-                  command=lambda: confirm_window.destroy()).place(
-                      relheight=0.45, relwidth=0.2, relx=0.2, rely=0.5)
+            text=f"Tem certeza de que deseja apagar {amount_items} produtos?\nEssa ação não pode ser desfeita.",
+            font="None 15 bold",
+        ).place(relheight=0.5, relwidth=1)
+        tk.Button(
+            confirm_window, text="Sim", command=lambda: confirm(), fg="red"
+        ).place(relheight=0.45, relwidth=0.2, relx=0.6, rely=0.5)
+        tk.Button(
+            confirm_window, text="Cancelar", command=lambda: confirm_window.destroy()
+        ).place(relheight=0.45, relwidth=0.2, relx=0.2, rely=0.5)
 
         def confirm():
             for product_id in selected_products:
@@ -375,42 +349,24 @@ class App:
         product_window.geometry("500x250")
         product_window.resizable(False, False)
 
-        tk.Label(product_window,
-                 text="Insira os dados do produto:",
-                 font="None 20 bold").place(relheight=0.1,
-                                            relwidth=1,
-                                            rely=0.05)
-        tk.Label(product_window, text="Nome:", font="None 15 bold",
-                 anchor="w").place(relheight=0.1,
-                                   relwidth=0.2,
-                                   rely=0.2,
-                                   relx=0.05)
-        tk.Label(product_window, text="Cor:", font="None 15 bold",
-                 anchor="w").place(relwidth=0.2,
-                                   relheight=0.1,
-                                   rely=0.3,
-                                   relx=0.05)
-        tk.Label(product_window,
-                 text="Tamanho:",
-                 font="None 15 bold",
-                 anchor="w").place(relwidth=0.2,
-                                   relheight=0.1,
-                                   rely=0.4,
-                                   relx=0.05)
-        tk.Label(product_window,
-                 text="Estoque:",
-                 font="None 15 bold",
-                 anchor="w").place(relwidth=0.2,
-                                   relheight=0.1,
-                                   rely=0.5,
-                                   relx=0.05)
-        tk.Label(product_window,
-                 text="Preço(R$):",
-                 font="None 15 bold",
-                 anchor="w").place(relwidth=0.2,
-                                   relheight=0.1,
-                                   rely=0.6,
-                                   relx=0.05)
+        tk.Label(
+            product_window, text="Insira os dados do produto:", font="None 20 bold"
+        ).place(relheight=0.1, relwidth=1, rely=0.05)
+        tk.Label(product_window, text="Nome:", font="None 15 bold", anchor="w").place(
+            relheight=0.1, relwidth=0.2, rely=0.2, relx=0.05
+        )
+        tk.Label(product_window, text="Cor:", font="None 15 bold", anchor="w").place(
+            relwidth=0.2, relheight=0.1, rely=0.3, relx=0.05
+        )
+        tk.Label(
+            product_window, text="Tamanho:", font="None 15 bold", anchor="w"
+        ).place(relwidth=0.2, relheight=0.1, rely=0.4, relx=0.05)
+        tk.Label(
+            product_window, text="Estoque:", font="None 15 bold", anchor="w"
+        ).place(relwidth=0.2, relheight=0.1, rely=0.5, relx=0.05)
+        tk.Label(
+            product_window, text="Preço(R$):", font="None 15 bold", anchor="w"
+        ).place(relwidth=0.2, relheight=0.1, rely=0.6, relx=0.05)
         name_entry = tk.Entry(product_window, font="None 12")
         name_entry.place(relheight=0.1, relwidth=0.7, rely=0.2, relx=0.25)
         color_entry = tk.Entry(product_window, font="None 12")
@@ -422,20 +378,20 @@ class App:
         price_entry = tk.Entry(product_window, font="None 12")
         price_entry.place(relheight=0.1, relwidth=0.7, rely=0.6, relx=0.25)
 
-        tk.Button(product_window,
-                  text="Cancelar",
-                  fg="#df1019",
-                  font="None 12",
-                  command=lambda: product_window.destroy()).place(
-                      rely=0.775, relx=0.2, relheight=0.15, relwidth=0.2)
-        tk.Button(product_window,
-                  text="Adicionar",
-                  fg="#008000",
-                  font="None 12",
-                  command=lambda: read_product()).place(rely=0.775,
-                                                        relx=0.6,
-                                                        relheight=0.15,
-                                                        relwidth=0.2)
+        tk.Button(
+            product_window,
+            text="Cancelar",
+            fg="#df1019",
+            font="None 12",
+            command=lambda: product_window.destroy(),
+        ).place(rely=0.775, relx=0.2, relheight=0.15, relwidth=0.2)
+        tk.Button(
+            product_window,
+            text="Adicionar",
+            fg="#008000",
+            font="None 12",
+            command=lambda: read_product(),
+        ).place(rely=0.775, relx=0.6, relheight=0.15, relwidth=0.2)
 
         def read_product():
             """
@@ -498,7 +454,7 @@ class App:
         """
         selected_products = list(map(int, self.table.selection()))
         amount_items = len(selected_products)
-        if (amount_items == 0):
+        if amount_items == 0:
             self.raise_message("Selecione um produto para alterar o estoque!")
             return
 
@@ -506,50 +462,42 @@ class App:
         stock_window.geometry("500x150")
         stock_window.resizable(False, False)
 
-        tk.Label(stock_window,
-                 text="Insira a quantidade e clique na ação:",
-                 font="None 20 bold").place(relheight=0.3,
-                                            relwidth=1,
-                                            rely=0.05)
-        tk.Label(stock_window,
-                 text="Quantidade:",
-                 font="None 15 bold",
-                 anchor="w").place(relheight=0.2,
-                                   relwidth=0.27,
-                                   rely=0.4,
-                                   relx=0.05)
+        tk.Label(
+            stock_window,
+            text="Insira a quantidade e clique na ação:",
+            font="None 20 bold",
+        ).place(relheight=0.3, relwidth=1, rely=0.05)
+        tk.Label(
+            stock_window, text="Quantidade:", font="None 15 bold", anchor="w"
+        ).place(relheight=0.2, relwidth=0.27, rely=0.4, relx=0.05)
         quantity_entry = tk.Entry(stock_window, font="None 12")
         quantity_entry.place(relheight=0.2, relwidth=0.63, rely=0.4, relx=0.32)
 
-        tk.Button(stock_window,
-                  text="Cancelar",
-                  fg="#df1019",
-                  font="None 12",
-                  command=lambda: stock_window.destroy()).place(rely=0.725,
-                                                                relx=0.04,
-                                                                relheight=0.15,
-                                                                relwidth=0.2)
-        tk.Button(stock_window,
-                  text="Adicionar",
-                  font="None 12",
-                  command=lambda: adjust_stock("add")).place(rely=0.725,
-                                                             relx=0.28,
-                                                             relheight=0.15,
-                                                             relwidth=0.2)
-        tk.Button(stock_window,
-                  text="Remover",
-                  font="None 12",
-                  command=lambda: adjust_stock("remove")).place(rely=0.725,
-                                                                relx=0.52,
-                                                                relheight=0.15,
-                                                                relwidth=0.2)
-        tk.Button(stock_window,
-                  text="Alterar",
-                  font="None 12",
-                  command=lambda: adjust_stock("change")).place(rely=0.725,
-                                                                relx=0.76,
-                                                                relheight=0.15,
-                                                                relwidth=0.2)
+        tk.Button(
+            stock_window,
+            text="Cancelar",
+            fg="#df1019",
+            font="None 12",
+            command=lambda: stock_window.destroy(),
+        ).place(rely=0.725, relx=0.04, relheight=0.15, relwidth=0.2)
+        tk.Button(
+            stock_window,
+            text="Adicionar",
+            font="None 12",
+            command=lambda: adjust_stock("add"),
+        ).place(rely=0.725, relx=0.28, relheight=0.15, relwidth=0.2)
+        tk.Button(
+            stock_window,
+            text="Remover",
+            font="None 12",
+            command=lambda: adjust_stock("remove"),
+        ).place(rely=0.725, relx=0.52, relheight=0.15, relwidth=0.2)
+        tk.Button(
+            stock_window,
+            text="Alterar",
+            font="None 12",
+            command=lambda: adjust_stock("change"),
+        ).place(rely=0.725, relx=0.76, relheight=0.15, relwidth=0.2)
 
         def adjust_stock(action):
             """
@@ -568,62 +516,53 @@ class App:
                 self.raise_message("A quantidade tem que ser não negativa!")
                 return
 
+            new_quantity = quantity
+            product = self.data.get_product(selected_products[0])
+
             if action == "remove":
-                if (amount_items > 1):
+                if amount_items > 1:
                     self.raise_message(
-                        "Selecione apenas um produto para essa operação.")
+                        "Selecione apenas um produto para essa operação."
+                    )
                     return
 
-                product = self.data.get_product(selected_products[0])
-
-                if quantity > product['in_stock']:
+                if quantity > product["in_stock"]:
                     self.raise_message(
                         "Tá querendo tirar mais do que tem?\nQuer moleza? Senta num pudim!"
                     )
                     return
 
-                new_quantity = product['in_stock'] - quantity
+                new_quantity = product["in_stock"] - quantity
 
                 new_history_window = tk.Toplevel(self.root)
                 new_history_window.geometry("700x150")
                 new_history_window.resizable(False, False)
 
-                tk.Label(new_history_window,
-                         text="Insira para quem o produto foi dado/vendido:",
-                         font="None 20 bold").place(relheight=0.3,
-                                                    relwidth=1,
-                                                    rely=0.05)
-                tk.Label(new_history_window,
-                         text="Nome:",
-                         font="None 15 bold",
-                         anchor="w").place(relheight=0.2,
-                                           relwidth=0.27,
-                                           rely=0.4,
-                                           relx=0.05)
+                tk.Label(
+                    new_history_window,
+                    text="Insira para quem o produto foi dado/vendido:",
+                    font="None 20 bold",
+                ).place(relheight=0.3, relwidth=1, rely=0.05)
+                tk.Label(
+                    new_history_window, text="Nome:", font="None 15 bold", anchor="w"
+                ).place(relheight=0.2, relwidth=0.27, rely=0.4, relx=0.05)
                 name_entry = tk.Entry(new_history_window, font="None 12")
-                name_entry.place(relheight=0.2,
-                                 relwidth=0.63,
-                                 rely=0.4,
-                                 relx=0.32)
+                name_entry.place(relheight=0.2, relwidth=0.63, rely=0.4, relx=0.32)
 
-                tk.Button(new_history_window,
-                          text="Dado",
-                          fg="#19B2FF",
-                          font="None 12",
-                          command=lambda: add_history("dadas")).place(
-                              rely=0.725,
-                              relx=0.06,
-                              relheight=0.15,
-                              relwidth=0.4)
-                tk.Button(new_history_window,
-                          text="Vendido",
-                          fg="#90EE90",
-                          font="None 12",
-                          command=lambda: add_history("vendidas")).place(
-                              rely=0.725,
-                              relx=0.54,
-                              relheight=0.15,
-                              relwidth=0.4)
+                tk.Button(
+                    new_history_window,
+                    text="Dado",
+                    fg="#19B2FF",
+                    font="None 12",
+                    command=lambda: add_history("dadas"),
+                ).place(rely=0.725, relx=0.06, relheight=0.15, relwidth=0.4)
+                tk.Button(
+                    new_history_window,
+                    text="Vendido",
+                    fg="#90EE90",
+                    font="None 12",
+                    command=lambda: add_history("vendidas"),
+                ).place(rely=0.725, relx=0.54, relheight=0.15, relwidth=0.4)
 
                 def add_history(action):
                     """
@@ -636,13 +575,13 @@ class App:
                     new_history_window.destroy()
 
             elif action == "add":
-                if (amount_items > 1):
+                if amount_items > 1:
                     self.raise_message(
-                        "Selecione apenas um produto para essa operação.")
+                        "Selecione apenas um produto para essa operação."
+                    )
                     return
 
-                product = self.data.get_product(selected_products[0])
-                new_quantity = product['in_stock'] + quantity
+                new_quantity = product["in_stock"] + quantity
 
                 self.data.add_history(
                     f"{quantity} unidades do produto {product['name']} {product['color']} {product['size']} foram adicionadas"
@@ -661,14 +600,16 @@ class App:
 
             stock_window.destroy()
 
-            if (amount_items == 1):
+            if amount_items == 1:
                 self.raise_message(
                     f"O estoque de {product['name']} {product['color']} {product['size']} foi atualizado para {new_quantity}",
-                    "Mensagem")
+                    "Mensagem",
+                )
             else:
                 self.raise_message(
                     f"O estoque dos produtos selecionados foi atualizado para {new_quantity}",
-                    "Mensagem")
+                    "Mensagem",
+                )
 
             self.fill_table()
 
@@ -678,7 +619,7 @@ class App:
         """
         selected_products = list(map(int, self.table.selection()))
         amount_items = len(selected_products)
-        if (amount_items == 0):
+        if amount_items == 0:
             self.raise_message("Selecione um produto para alterar o preço!")
             return
 
@@ -686,34 +627,25 @@ class App:
         price_window.geometry("500x150")
         price_window.resizable(False, False)
 
-        tk.Label(price_window,
-                 text="Insira o novo preço:",
-                 font="None 20 bold").place(relheight=0.3,
-                                            relwidth=1,
-                                            rely=0.05)
-        tk.Label(price_window, text="Preço:", font="None 15 bold",
-                 anchor="w").place(relheight=0.2,
-                                   relwidth=0.27,
-                                   rely=0.4,
-                                   relx=0.05)
+        tk.Label(price_window, text="Insira o novo preço:", font="None 20 bold").place(
+            relheight=0.3, relwidth=1, rely=0.05
+        )
+        tk.Label(price_window, text="Preço:", font="None 15 bold", anchor="w").place(
+            relheight=0.2, relwidth=0.27, rely=0.4, relx=0.05
+        )
         price_entry = tk.Entry(price_window, font="None 12")
         price_entry.place(relheight=0.2, relwidth=0.63, rely=0.4, relx=0.32)
 
-        tk.Button(price_window,
-                  text="Cancelar",
-                  fg="#df1019",
-                  font="None 12",
-                  command=lambda: price_window.destroy()).place(rely=0.725,
-                                                                relx=0.06,
-                                                                relheight=0.15,
-                                                                relwidth=0.4)
-        tk.Button(price_window,
-                  text="Alterar",
-                  font="None 12",
-                  command=lambda: adjust_price()).place(rely=0.725,
-                                                        relx=0.54,
-                                                        relheight=0.15,
-                                                        relwidth=0.4)
+        tk.Button(
+            price_window,
+            text="Cancelar",
+            fg="#df1019",
+            font="None 12",
+            command=lambda: price_window.destroy(),
+        ).place(rely=0.725, relx=0.06, relheight=0.15, relwidth=0.4)
+        tk.Button(
+            price_window, text="Alterar", font="None 12", command=lambda: adjust_price()
+        ).place(rely=0.725, relx=0.54, relheight=0.15, relwidth=0.4)
 
         def adjust_price():
             """
@@ -724,7 +656,8 @@ class App:
                 new_price = float(price_entry.get().replace(",", "."))
             except ValueError:
                 self.raise_message(
-                    "Aiai, eu avisei que a quantidade tinha que ser um real!")
+                    "Aiai, eu avisei que a quantidade tinha que ser um real!"
+                )
                 return
 
             if new_price < 0:
@@ -736,19 +669,26 @@ class App:
 
                 self.data.update_price(product_id, new_price)
                 self.data.add_history(
-                    f"Preço do produto {product['name']} {product['color']} {product['size']} foi alterado de R${product['price']:.2f} para R${new_price:.2f}"
-                    .replace(".", ","))
+                    f"Preço do produto {product['name']} {product['color']} {product['size']} foi alterado de R${product['price']:.2f} para R${new_price:.2f}".replace(
+                        ".", ","
+                    )
+                )
 
             price_window.destroy()
 
-            if (amount_items == 1):
+            if amount_items == 1:
+                product = self.data.get_product(selected_products[0])
                 self.raise_message(
                     f"O preço de {product['name']} {product['color']} {product['size']} foi atualizado para R$"
-                    + f"{new_price:.2f}".replace(".", ","), "Mensagem")
+                    + f"{new_price:.2f}".replace(".", ","),
+                    "Mensagem",
+                )
             else:
                 self.raise_message(
                     "O preço dos produtos selecionados foi atualizado para R$"
-                    + f"{new_price:.2f}".replace(".", ","), "Mensagem")
+                    + f"{new_price:.2f}".replace(".", ","),
+                    "Mensagem",
+                )
 
             self.fill_table()
 
@@ -761,13 +701,14 @@ class App:
         message_window.resizable(False, False)
         message_window.title(title)
 
-        tk.Label(message_window, text=message,
-                 font="None 20 bold").pack(padx=5)
-        tk.Button(message_window,
-                  text="Ok",
-                  font="None 15",
-                  fg="blue",
-                  command=lambda: message_window.destroy()).pack(pady=5)
+        tk.Label(message_window, text=message, font="None 20 bold").pack(padx=5)
+        tk.Button(
+            message_window,
+            text="Ok",
+            font="None 15",
+            fg="blue",
+            command=lambda: message_window.destroy(),
+        ).pack(pady=5)
 
     def fill_table(self):
         """
@@ -782,26 +723,30 @@ class App:
 
         # Adds the products
         for product in produtcs:
-            if product['in_stock']:
+            if product["in_stock"]:
                 self.table.insert(
                     "",
                     "end",
-                    iid=product['id'],
-                    values=
-                    (f"{product['name']} {product['color']} {product['size']}",
-                     product['in_stock'],
-                     "R$" + f"{product['price']:.2f}".replace(".", ",")),
-                    tags=('greenrow', ))
+                    iid=product["id"],
+                    values=(
+                        f"{product['name']} {product['color']} {product['size']}",
+                        product["in_stock"],
+                        "R$" + f"{product['price']:.2f}".replace(".", ","),
+                    ),
+                    tags=("greenrow",),
+                )
             else:
                 self.table.insert(
                     "",
                     "end",
-                    iid=product['id'],
-                    values=
-                    (f"{product['name']} {product['color']} {product['size']}",
-                     product['in_stock'],
-                     "R$" + f"{product['price']:.2f}".replace(".", ",")),
-                    tags=('redrow', ))
+                    iid=product["id"],
+                    values=(
+                        f"{product['name']} {product['color']} {product['size']}",
+                        product["in_stock"],
+                        "R$" + f"{product['price']:.2f}".replace(".", ","),
+                    ),
+                    tags=("redrow",),
+                )
 
     def close(self):
         self.data.close()
